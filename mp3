@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+APP_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+if [[ ! -x "$APP_DIR/.venv/bin/python" ]]; then
+    echo 'Primero ejecutá: ./instalar.sh' >&2
+    exit 1
+fi
+if [[ $# -eq 0 ]] || [[ $# -eq 1 && "$1" == "--interfaz" ]]; then
+    exec "$APP_DIR/.venv/bin/python" "$APP_DIR/tui.py"
+fi
+exec "$APP_DIR/.venv/bin/python" "$APP_DIR/app.py" "$@"
